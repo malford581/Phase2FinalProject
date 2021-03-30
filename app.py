@@ -16,7 +16,7 @@ class USCounties(db.Model):
     deaths = db.Column(db.Integer, nullable=False)
 
 class USStates(db.Model):
-    id = db.Column(db.Integer, priary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Integer, nullable=False)
     state = db.Column(db.String, nullable=False)
     cases = db.Column(db.Integer, nullable=False)
@@ -24,21 +24,31 @@ class USStates(db.Model):
 
 ButtonPressed = 0 
 ButtonPressed2 = 0
-@app.route("/home", methods=["GET", "POST"])
-def home():
-    return "COVID-19 has really shown what governments are willing to do to help the people. Here we are taking data to show which states in the US have made the most progress."
-
-def button():
-    if requests.method == "POST":
+@app.route("/", methods=["GET", "POST"])
+def home():       
+    def button():
+        if requests.method == "POST":
+            return render_template("home.html", ButtonPressed = ButtonPressed)
         return render_template("home.html", ButtonPressed = ButtonPressed)
-    return render_template("home.html", ButtonPressed = ButtonPressed)
 
-def button2():
-    if requests.method == "POST":
+    def button2():
+        if requests.method == "POST":
+            return render_template("home.html", ButtonPressed2 = ButtonPressed2)
         return render_template("home.html", ButtonPressed2 = ButtonPressed2)
-    return render_template("home.html", ButtonPressed2 = ButtonPressed2)
+    
+    return  """
+        <!DOCTYPE html>
+        <head>
+            <title>COVID-19 in the States 1 Year Later</title>
+        </head>
+        <body>
+            <h1>COVID-19 in the States 1 Year Later</h1>
+            <p>COVID-19 has really shown what governments are willing to do to help the people.</p>
+            <p>Here we are taking data to show which states in the US have made the most progress.</p>
+        </body>    
+        """
 
-@app.route("/Counties", methods=["GET"])
+@app.route("/counties", methods=["GET"])
 def Counties():
     table = USCounties.query.all()
     d=[]
@@ -54,7 +64,7 @@ def Counties():
         d.append(row_as_dict)
     return jsonify(d)
 
-@app.route("/States", methods=["GET"])
+@app.route("/states", methods=["GET"])
 def States():
     table = USStates.query.all()
     d=[]
@@ -69,7 +79,19 @@ def States():
         d.append(row_as_dict)
     return jsonify(d)
 
-
+@app.route("/about", methods=["GET"])
+def About():
+    return """
+    <!DOCTYPE html>
+    <head>
+        <title>About</title>
+    </head>
+    <body> 
+        <h1> This database is a visualization of how different parts of the United States is handling COVID-19.</h1>
+        <p> Over the course of the past year COVID-19 has ravaged the entire world.</p>
+    </body>
+        
+    """
 
 if __name__ == "__main__":
     app.run(debug=True)
