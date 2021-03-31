@@ -3,7 +3,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
+import sqlite3
+from app import db
+from sqlalchemy import create_engine
+
+countydf = pd.read_csv('..project_datasets/us-counties.csv')
 
 statesdf = pd.read_csv('..project_datasets/us-states.csv')
 
-statesdf 
+engine = create_engine('sqlite://', echo=False)
+countydf.to_sql('county', con=db.engine)
+engine.execute("SELECT * FROM county").fetchall()
+
+engine2 = create_engine('sqlite://', echo=False)
+statesdf.to_sql('states', con=db.engine2)
+engine2.execute("SELECT * FROM states").fetchall() 
