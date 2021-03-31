@@ -25,31 +25,22 @@ class USStates(db.Model):
 ButtonPressed = 0 
 ButtonPressed2 = 0
 @app.route("/", methods=["GET", "POST"])
-def home():       
-    def button():
-        if requests.method == "POST":
-            return render_template("home.html", ButtonPressed = ButtonPressed)
+def home():
+    return render_templates("home.html")
+
+def button():
+    if requests.method == "POST":
         return render_template("home.html", ButtonPressed = ButtonPressed)
+    return render_template("home.html", ButtonPressed = ButtonPressed)
 
-    def button2():
-        if requests.method == "POST":
-            return render_template("home.html", ButtonPressed2 = ButtonPressed2)
+def button2():
+    if requests.method == "POST":
         return render_template("home.html", ButtonPressed2 = ButtonPressed2)
+    return render_template("home.html", ButtonPressed2 = ButtonPressed2)
     
-    return  """
-        <!DOCTYPE html>
-        <head>
-            <title>COVID-19 in the States 1 Year Later</title>
-        </head>
-        <body>
-            <h1>COVID-19 in the States 1 Year Later</h1>
-            <p>COVID-19 has really shown what governments are willing to do to help the people.</p>
-            <p>Here we are taking data to show which states in the US have made the most progress.</p>
-        </body>    
-        """
-
+    
 @app.route("/counties", methods=["GET"])
-def Counties():
+def counties():
     table = USCounties.query.all()
     d=[]
 
@@ -65,7 +56,7 @@ def Counties():
     return jsonify(d)
 
 @app.route("/states", methods=["GET"])
-def States():
+def states():
     table = USStates.query.all()
     d=[]
 
@@ -80,7 +71,7 @@ def States():
     return jsonify(d)
 
 @app.route("/about", methods=["GET"])
-def About():
+def about():
     return """
     <!DOCTYPE html>
     <head>
