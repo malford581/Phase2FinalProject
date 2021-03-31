@@ -24,21 +24,22 @@ class USStates(db.Model):
 
 ButtonPressed = 0 
 ButtonPressed2 = 0
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET"])
 def home():
-    return render_templates("home.html")
+    return render_template("home.html")
 
 def button():
     if requests.method == "POST":
         return render_template("home.html", ButtonPressed = ButtonPressed)
     return render_template("home.html", ButtonPressed = ButtonPressed)
 
-def button2():
-    if requests.method == "POST":
+    def button2():
+        if requests.method == "POST":
+            return render_template("home.html", ButtonPressed2 = ButtonPressed2)
         return render_template("home.html", ButtonPressed2 = ButtonPressed2)
-    return render_template("home.html", ButtonPressed2 = ButtonPressed2)
     
-    
+    return render_template("home.html")
+
 @app.route("/counties", methods=["GET"])
 def counties():
     table = USCounties.query.all()
