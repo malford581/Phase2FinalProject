@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Phase_2_Final_Project/project_datasets/us-counties.csv'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Phase_2_Final_Project/data.py'
 
 db = SQLAlchemy(app)
 
