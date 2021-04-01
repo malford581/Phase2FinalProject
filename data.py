@@ -11,10 +11,8 @@ countydf = pd.read_csv('..project_datasets/us-counties.csv')
 
 statesdf = pd.read_csv('..project_datasets/us-states.csv')
 
-engine = create_engine('sqlite://', echo=False)
+engine = create_engine('sqlite://uscovid.db', echo=False)
 countydf.to_sql('county', con=db.engine)
+statesdf.to_sql('states', con=db.engine)
 engine.execute("SELECT * FROM county").fetchall()
-
-engine2 = create_engine('sqlite://', echo=False)
-statesdf.to_sql('states', con=db.engine2)
-engine2.execute("SELECT * FROM states").fetchall() 
+engine.execute("SELECT * FROM states").fetchall()
